@@ -1,20 +1,40 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:avatar/extensions/sizedboxhw.dart';
+import 'package:avatar/styles/styels.dart';
+import 'package:avatar/widgets/comments.dart';
+import 'package:avatar/widgets/morelike.dart';
+import 'package:avatar/widgets/person.dart';
+import 'package:avatar/widgets/trailers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+String image = "";
+
 // ignore: must_be_immutable
-class SeconPage extends StatelessWidget {
+class SeconPage extends StatefulWidget {
   String imageaddres;
   String filmname;
   String country;
   String rate;
   String year;
-  SeconPage({super.key, required this.imageaddres, this.country = "", this.filmname = "", required this.rate, this.year = ""});
+  SeconPage({super.key, this.imageaddres = "", this.country = "", this.filmname = "", required this.rate, this.year = ""});
+  setimage() {
+    image = imageaddres;
+  }
 
+  @override
+  // ignore: no_logic_in_create_state
+  State<SeconPage> createState() => _SeconPageState();
+}
+
+List<Widget> tabs = [Trailers(image), MoreLike(), Comments()];
+
+class _SeconPageState extends State<SeconPage> {
+  int currentdivider = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +43,9 @@ class SeconPage extends StatelessWidget {
         Flexible(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               alignment: Alignment.topRight,
-              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/$imageaddres"), fit: BoxFit.fill), color: Colors.white),
+              decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/images/${widget.imageaddres}"), fit: BoxFit.fill), color: Colors.white),
               child: IconButton(
                 onPressed: () {},
                 icon: const Icon(
@@ -49,7 +69,7 @@ class SeconPage extends StatelessWidget {
                       height: 67,
                       width: 230,
                       child: Text(
-                        filmname,
+                        widget.filmname,
                         style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -80,16 +100,16 @@ class SeconPage extends StatelessWidget {
                       color: Color(0xff771DD8),
                     ),
                     Text(
-                      " $rate ",
+                      " ${widget.rate} ",
                       style: const TextStyle(color: Color(0xff4C1982), fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                     Text(
-                      " $year ",
+                      " ${widget.year} ",
                       style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: Color(0xff15191E)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: const [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: const Color(0xff15191E)),
                       child: const Text(
                         "+18",
                         style: TextStyle(color: Color(0xff431876), fontSize: 12),
@@ -97,15 +117,15 @@ class SeconPage extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: Color(0xff15191E)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: const [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: const Color(0xff15191E)),
                       child: Text(
-                        country,
+                        widget.country,
                         style: const TextStyle(color: Color(0xff431876), fontSize: 12),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: Color(0xff15191E)),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), boxShadow: const [BoxShadow(blurRadius: 10, color: Color(0xff431876))], color: const Color(0xff15191E)),
                       child: const Text(
                         "Subtitle",
                         style: TextStyle(color: Color(0xff431876), fontSize: 12),
@@ -179,7 +199,75 @@ class SeconPage extends StatelessWidget {
                     text: "Lorem Ipsum is simply  printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown ...",
                   ),
                   TextSpan(text: "View More", style: TextStyle(color: Color.fromARGB(255, 83, 25, 243)))
-                ]))
+                ])),
+                15.height(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[PersonInfo("Jomes", "Camoren", "Director", "person.png"), 10.width(), PersonInfo("Jomes", "Camoren", "Director", "person.png"), 10.width(), PersonInfo("Jomes", "Camoren", "Director", "person.png"), 10.width(), PersonInfo("Jomes", "Camoren", "Director", "person.png"), 10.width(), PersonInfo("Jomes", "Camoren", "Director", "person.png")],
+                  ),
+                ),
+                10.height(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Flexible(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              currentdivider = 0;
+                            });
+                          },
+                          child: Text(
+                            "Trailers",
+                            style: TextStyle(color: currentdivider == 0 ? const Color(0xff771DD8) : Colors.white70),
+                          ),
+                        )),
+                    Flexible(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              currentdivider = 1;
+                            });
+                          },
+                          child: Text(
+                            "More Like This",
+                            style: TextStyle(color: currentdivider == 1 ? const Color(0xff771DD8) : Colors.white70),
+                          ),
+                        )),
+                    Flexible(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              currentdivider = 2;
+                            });
+                          },
+                          child: Text(
+                            "Comments",
+                            style: TextStyle(color: currentdivider == 2 ? const Color(0xff771DD8) : Colors.white70),
+                          ),
+                        ))
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    const Divider(
+                      color: Colors.white60,
+                      thickness: 2,
+                    ),
+                    Divider(
+                      indent: Dividersize.devider[currentdivider][0].toDouble(),
+                      endIndent: Dividersize.devider[currentdivider][1].toDouble(),
+                      color: const Color(0xff771DD8),
+                      thickness: 2,
+                    ),
+                  ],
+                ),
+                5.height(),
+                tabs[currentdivider]
               ],
             ),
           ),
