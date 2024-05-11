@@ -12,10 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-String image = "";
-
 // ignore: must_be_immutable
 class SeconPage extends StatefulWidget {
+  static String image = "";
+
   String imageaddres;
   String filmname;
   String country;
@@ -31,9 +31,9 @@ class SeconPage extends StatefulWidget {
   State<SeconPage> createState() => _SeconPageState();
 }
 
-List<Widget> tabs = [Trailers(image), MoreLike(), Comments()];
-
 class _SeconPageState extends State<SeconPage> {
+  List<Widget> tabs = [Trailers(SeconPage.image), MoreLike(), Comments()];
+
   int currentdivider = 0;
   @override
   Widget build(BuildContext context) {

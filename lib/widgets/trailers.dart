@@ -55,14 +55,14 @@ class Trailer extends StatelessWidget {
 class Trailers extends StatelessWidget {
   String imagaddres;
 
-   Trailers(this.imagaddres,{super.key});
+  Trailers(this.imagaddres, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
         child: SingleChildScrollView(
       child: Column(
-        children: <Widget>[Trailer(imagaddres, "Trailer 3: Final", "1m 45s"), 20.height(), Trailer("avatar.png", "Trailer 3: Final", "1m 45s"), 20.height(), Trailer("avatar.png", "Trailer 3: Final", "1m 45s")],
+        children: <Widget>[Trailer("xmen.png", "Trailer 3: Final", "1m 45s"), 20.height(), Trailer("avatar.png", "Trailer 3: Final", "1m 45s"), 20.height(), Trailer("avatar.png", "Trailer 3: Final", "1m 45s")],
       ),
     ));
   }
